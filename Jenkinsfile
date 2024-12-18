@@ -5,7 +5,7 @@ pipeline {
         stage('deploy to k8') {
             steps {
                 script {
-                  kubernetesDeploy (configs: 'deploymentservice.yaml',kubeconfigId: 'k8sconfigpwd')
+                  kubernetesDeploy (configs: 'deployment.yaml',kubeconfigId: 'k8sconfigpwd')
                     // The echo command will print "Hello, World!" to the console
                     echo 'Hello, World!'
                 }
