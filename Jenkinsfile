@@ -5,7 +5,13 @@ pipeline {
         stage('deploy to k8') {
             steps {
                 script {
-                  kubernetesDeploy (configs: 'deployment.yaml',kubeconfigId: 'k8sconfigpwd')
+                    
+                     withCredentials([file(credentialsId: 'KUBERNETES-CREDENTIALS'	, variable: 'KUBECONFIG')]) {
+                        // Run kubectl commands inside the pipeline to interact with Kubernetes
+                        sh 'kubectl get pods'  // Replace with the path to your Kubernetes deployment YAML
+                        sh 'kubectl apply -f deployment.yaml '
+                        
+                    }
                     // The echo command will print "Hello, World!" to the console
                     echo 'Hello, World!'
                 }
@@ -15,7 +21,12 @@ pipeline {
        stage('deploy to k8-service') {
             steps {
                 script {
-                  kubernetesDeploy (configs: 'service.yaml',kubeconfigId: 'k8sconfigpwd')
+                     withCredentials([file(credentialsId: 'KUBERNETES-CREDENTIALS'	, variable: 'KUBECONFIG')]) {
+                        // Run kubectl commands inside the pipeline to interact with Kubernetes
+                        sh 'kubectl get pods'  // Replace with the path to your Kubernetes deployment YAML
+                        sh 'kubectl apply -f service.yaml '
+                        
+                    }
                     // The echo command will print "Hello, World!" to the console
                     echo 'Hello, World!'
                 }
